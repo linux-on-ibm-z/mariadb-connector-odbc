@@ -4,6 +4,7 @@ set -x
 set -e
 
 DEBIAN_FRONTEND=noninteractive sudo apt-get update
+DEBIAN_FRONTEND=noninteractive sudo apt remove -y mariadb-server mariadb-server-10.3 mariadb-server-core-10.3
 DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev 
 
 sudo service mysql start
