@@ -8,7 +8,7 @@ addons:
 matrix:
   include:
     - os: linux
-      if: type = push AND branch = travis
+      if: type = push AND branch = test_travis
       install: chmod +x .travis/s390x.sh
       arch: s390x
       dist: focal
