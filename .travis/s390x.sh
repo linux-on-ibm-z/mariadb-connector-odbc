@@ -7,7 +7,8 @@ set -e
 DEBIAN_FRONTEND=noninteractive sudo apt-get update
 DEBIAN_FRONTEND=noninteractive sudo apt-get install -y unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev patch
 
-sudo service mysql start 
+sudo service mysql status 
+
 sudo systemctl status mysql.service
 sudo ln -s /var/run/mysqld/mysqld.sock /tmp/mysql.sock
 sudo mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test;'
