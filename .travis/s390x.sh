@@ -3,11 +3,7 @@
 set -x
 set -e
 
-cd /var/lib/mysql
-ls
-rm -r *
-cd -
-
+sudo rm -rf /var/lib/mysql/*
 DEBIAN_FRONTEND=noninteractive sudo apt-get update
 DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server-10.3 mariadb-client-10.3 unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev patch
 sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
