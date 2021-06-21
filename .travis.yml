@@ -12,9 +12,7 @@ matrix:
       install: chmod +x .travis/s390x.sh
       arch: s390x
       dist: focal
-      addons:
-        mariadb: '10.3'
-
+   
 script:
   - if [[ "$DB" == build* ]] ; then .travis/build/build.sh; fi
   - if [[ "$DB" == build* ]] ; then docker build -t build:10.6 --label build .travis/build/; fi
