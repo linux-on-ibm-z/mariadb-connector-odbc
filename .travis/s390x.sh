@@ -9,7 +9,6 @@ DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server-10.3 maria
 
 
 sudo service mysql start 
-sleep 30s
 sudo systemctl status mariadb.service
 sudo ln -s /var/run/mysqld/mysqld.sock /tmp/mysql.sock
 sudo mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test;'
