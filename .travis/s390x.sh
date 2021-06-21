@@ -3,13 +3,11 @@
 set -x
 set -e
 
-sudo rm -rf /var/lib/mysql/*
-DEBIAN_FRONTEND=noninteractive sudo apt-get update
-DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server-10.3 mariadb-client-10.3 unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev patch
-sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
-sudo systemctl start mysql.service
 
-#sudo service mysql start 
+DEBIAN_FRONTEND=noninteractive sudo apt-get update
+DEBIAN_FRONTEND=noninteractive sudo apt-get install -y unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev patch
+
+sudo service mysql start 
 sudo systemctl status mysql.service
 sudo ln -s /var/run/mysqld/mysqld.sock /tmp/mysql.sock
 sudo mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test;'
