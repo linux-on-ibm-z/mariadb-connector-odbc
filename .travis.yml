@@ -2,23 +2,38 @@ sudo: true
 language: c
 services: docker
 addons:
-  mariadb: '10.3'
   hosts:
     - mariadb.example.com
+#  homebrew:
+#    packages:
+#      - openssl
+#      - libiodbc
+#      - mariadb
+
+before_install:
+  #- chmod +x .travis/script.sh
+  #- chmod +x .travis/osx.sh
+  #- chmod +x .travis/gen-ssl.sh
+  #- chmod +x .travis/build/build.sh
+  #- chmod +x .travis/build/docker-entrypoint.sh
+  - chmod +x .travis/s390x.sh
+  - chmod 777 .travis/build/
+  - export PROJ_PATH=`pwd`
+  - export ENTRYPOINT=$PROJ_PATH/.travis/sql
+  - mkdir tmp
+  - .travis/gen-ssl.sh mariadb.example.com tmp
+  - export SSLCERT=$PROJ_PATH/tmp
 
 matrix:
   include:
     - os: linux
-      if: type = push AND branch = test_travis
-      install: chmod +x .travis/s390x.sh
+      env: DB=mariadb:10.3
+    - os: linux
       arch: s390x
-      dist: focal
-   
+
 script:
-  - if [[ "$DB" == build* ]] ; then .travis/build/build.sh; fi
-  - if [[ "$DB" == build* ]] ; then docker build -t build:10.6 --label build .travis/build/; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$TRAVIS_ARCH" != "s390x" ]; then .travis/script.sh; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then .travis/osx.sh; fi
   - if [ "$TRAVIS_ARCH" = "s390x" ]; then .travis/s390x.sh; fi
-  
-  
+  - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$DB" = "build" ] ; then .travis/build/build.sh; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$DB" = "build" ] ; then docker build -t build:latest --label build .travis/build/; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$TRAVIS_ARCH" != "s390x" ] ; then .travis/script.sh; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then .travis/osx.sh; fi
