@@ -9,9 +9,9 @@ sudo apt purge -y mysql-server mysql-client mysql-common
 sudo apt autoremove -y
  
 DEBIAN_FRONTEND=noninteractive sudo apt-get update
-sudo sed -i -e '$aexit 0' /usr/sbin/policy-rc.d
+#sudo sed -i -e '$aexit 0' /usr/sbin/policy-rc.d
 
-DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev patch
+DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev patch || true 
 sudo service mysql start
 sudo mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test;'
 sudo mysql -u root -e "USE mysql; UPDATE user SET plugin='mysql_native_password' WHERE User='root'; FLUSH PRIVILEGES;"
