@@ -8,8 +8,9 @@ sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
 sudo apt purge -y mysql-server mysql-client mysql-common
 sudo apt autoremove -y
  
-DEBIAN_FRONTEND=noninteractive sudo apt-get update
-#sudo sed -i -e '$aexit 0' /usr/sbin/policy-rc.d
+DEBIAN_FRONTEND=noninteractive sudo apt-get update 
+DEBIAN_FRONTEND=noninteractive sudo apt-get install -y systemd
+sudo sed -i -e '$aexit 0' /usr/sbin/policy-rc.d
 
 DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev patch || true 
 sudo service mysql start
