@@ -28,14 +28,9 @@ matrix:
   include:
     - os: linux
       dist: focal 
-      env: DB=mariadb:10.3
     - os: linux
       arch: s390x
       dist: focal
      
 script:
-  - if [ "$TRAVIS_ARCH" = "s390x" ]; then .travis/s390x.sh; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$DB" = "build" ] ; then .travis/build/build.sh; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$DB" = "build" ] ; then docker build -t build:latest --label build .travis/build/; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$TRAVIS_ARCH" != "s390x" ] ; then .travis/script.sh; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then .travis/osx.sh; fi
+   .travis/s390x.sh
