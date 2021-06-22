@@ -2,6 +2,7 @@ sudo: true
 language: c
 services: docker
 addons:
+  mariadb: '10.3'
   hosts:
     - mariadb.example.com
 
