@@ -9,7 +9,7 @@ sudo apt purge -y mysql-server mysql-client mysql-common
 sudo apt autoremove -y
 sudo ls /etc/systemd/system/
 sudo ls /lib/systemd/
-#DEBIAN_FRONTEND=noninteractive sudo apt-get update
+DEBIAN_FRONTEND=noninteractive sudo apt-get update
 DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev patch
 sudo service mysql start
 sudo mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test;'
