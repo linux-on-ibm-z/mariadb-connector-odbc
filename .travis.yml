@@ -27,8 +27,6 @@ before_install:
 matrix:
   include:
     - os: linux
-      dist: focal 
-    - os: linux
       arch: s390x
       dist: focal
      
