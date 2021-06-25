@@ -9,11 +9,8 @@ sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
 sudo apt purge -y mysql-server mysql-client mysql-common
 sudo apt autoremove -y
 sudo apt autoclean -y
-ps afx 
-sudo find / -name mysql*
-#sudo sed -i -e '$aexit 0' /usr/sbin/policy-rc.d
-#DEBIAN_FRONTEND=noninteractive sudo apt-get install -y systemd man-db
-DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server-10.3  mariadb-client-10.3
+
+DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server
 DEBIAN_FRONTEND=noninteractive sudo apt-get install -y unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev patch 
 sudo service mysql start
 sudo mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test;'
