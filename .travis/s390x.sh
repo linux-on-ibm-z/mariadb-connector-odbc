@@ -12,7 +12,8 @@ DEBIAN_FRONTEND=noninteractive sudo apt-get update
 # # sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mariadb-server
 # sudo apt-get install -y -o Debug::pkgProblemResolver=yes -o Dpkg::Options::=--force-confnew mariadb-server
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev patch 
-sudo service mysql restart
+systemctl start mariadb
+# sudo service mysql restart
 sudo mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test;'
 sudo mysql -u root -e "USE mysql; UPDATE user SET plugin='mysql_native_password' WHERE User='root'; FLUSH PRIVILEGES;"
 mysql --version
