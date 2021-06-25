@@ -32,7 +32,7 @@ matrix:
   include:
     - os: linux
       arch: s390x
-      dist: focal
+      dist: bionic
      
 script:
    .travis/s390x.sh
