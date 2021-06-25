@@ -2,6 +2,10 @@ sudo: true
 language: c
 services: docker
 addons:
+  mariadb: '10.3'
+  apt:
+  packages:
+    - mariadb-server
   hosts:
     - mariadb.example.com
 #  homebrew:
