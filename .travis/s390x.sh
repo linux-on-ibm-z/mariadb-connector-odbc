@@ -4,13 +4,14 @@ set -x
 set -e
 
 DEBIAN_FRONTEND=noninteractive sudo apt-get update 
-sudo service mysql stop
-sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
-sudo apt purge -y mysql-server mysql-client mysql-common
-sudo apt autoremove -y
-sudo apt autoclean -y
+# sudo service mysql stop
+# sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
+# sudo apt purge -y mysql-server mysql-client mysql-common
+# sudo apt autoremove -y
+# sudo apt autoclean -y
 
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mariadb-server
+# sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mariadb-server
+sudo apt-get install -y -o Debug::pkgProblemResolver=yes -o Dpkg::Options::=--force-confnew mariadb-server
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev patch 
 sudo service mysql start
 sudo mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test;'
