@@ -4,11 +4,10 @@ set -x
 set -e
 
 DEBIAN_FRONTEND=noninteractive sudo apt-get update 
-# sudo service mysql stop
-# sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
-# sudo apt purge -y mysql-server mysql-client mysql-common
-# sudo apt autoremove -y
-# sudo apt autoclean -y
+sudo service mysql stop
+sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
+sudo apt purge -y mysql-server mysql-client mysql-common
+sudo apt autoremove -y
 
 # sudo DEBIAN_FRONTEND=noninteractive apt-get install -y mariadb-server
 sudo apt-get install -y -o Debug::pkgProblemResolver=yes -o Dpkg::Options::=--force-confnew mariadb-server
