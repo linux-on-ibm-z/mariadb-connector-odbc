@@ -24,10 +24,6 @@ export TEST_DSN=maodbc_test
 export TEST_UID=root
 export TEST_PASSWORD=
 
-export PATCH_URL="https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/MariaDB-Connector-ODBC/3.1.11/patch"
-curl -SL -o mariadb_stmt.c.patch $PATCH_URL/mariadb_stmt.c.patch
-patch -l libmariadb/libmariadb/mariadb_stmt.c mariadb_stmt.c.patch
-rm -rf *.patch
 cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DWITH_OPENSSL=ON -DWITH_SSL=OPENSSL -DODBC_LIB_DIR=/usr/lib/s390x-linux-gnu/
 cmake --build . --config RelWithDebInfo 
 
