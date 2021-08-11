@@ -2,12 +2,10 @@ sudo: true
 language: c
 services: docker
 addons:
-  mariadb: '10.3'
   hosts:
     - mariadb.example.com
 matrix:
   include:
     - os: linux
       arch: s390x
-      dist: focal
-     
+      dist: focal    
