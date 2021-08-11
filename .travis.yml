@@ -4,7 +4,9 @@ services: docker
 addons:
   hosts:
     - mariadb.example.com
-
+addons:
+  mariadb: '10.3'
+  
 before_install:
   - chmod 777 .travis/build/
   - export PROJ_PATH=`pwd`
@@ -18,7 +20,6 @@ matrix:
     - os: linux
       arch: s390x
       dist: focal
-      language: generic
 
 script:
   - sudo apt-get update 
@@ -28,5 +29,5 @@ script:
 #  - sudo systemctl stop mysql
 #  - sudo systemctl disable mysql
   - sudo apt autoremove -y
-  - sudo apt autoclean -y && DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server
+  - sudo apt autoclean -y && DEBIAN_FRONTEND=noninteractive sudo apt-get install -y vim
 #  - sudo service mysql start
