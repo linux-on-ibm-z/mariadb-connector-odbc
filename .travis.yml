@@ -26,5 +26,5 @@ script:
   - sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
   - sudo apt purge -y mysql-server mysql-client mysql-common
   - sudo apt autoremove -y
-  - sudo apt autoclean -y && DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb* 
+  - sudo apt autoclean -y && DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server
   - sudo service mysql start
