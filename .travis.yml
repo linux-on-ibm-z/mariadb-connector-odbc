@@ -6,7 +6,7 @@ addons:
     - mariadb.example.com
 
 before_install:
-  - chmod 777 .travis/s390x.sh
+  - chmod 777 .travis/build/
   - export PROJ_PATH=`pwd`
   - export ENTRYPOINT=$PROJ_PATH/.travis/sql
   - mkdir tmp
@@ -14,10 +14,17 @@ before_install:
   - export SSLCERT=$PROJ_PATH/tmp
 
 matrix:
-  allow_failures:
+  include:
     - os: linux
       arch: s390x
-      dist: focal    
-      
-script:      
-  .travis/s390x.sh; 
+      dist: focal
+
+script:
+  - DEBIAN_FRONTEND=noninteractive sudo apt-get update 
+  - sudo service mysql stop
+  - sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
+  - sudo apt purge -y mysql-server mysql-client mysql-common
+  - sudo apt autoremove -y
+  - sudo apt autoclean -y 
+  - DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server 
+  - sudo service mysql start
