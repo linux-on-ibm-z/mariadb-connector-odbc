@@ -18,6 +18,7 @@ matrix:
     - os: linux
       arch: s390x
       dist: focal
+      language: generic
 
 script:
   - sudo apt-get update 
