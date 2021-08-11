@@ -6,7 +6,7 @@ addons:
     - mariadb.example.com
     
 addons:
-  mariadb: '10.3'
+  mariadb-server: '10.3'
   
 before_install:
   - chmod +x .travis/s390x.sh
