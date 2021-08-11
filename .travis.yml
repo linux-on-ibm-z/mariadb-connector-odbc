@@ -6,6 +6,10 @@ addons:
     - mariadb.example.com
     
 addons:
+  apt:
+    update: true
+    
+addons:
   mariadb-server: '10.3'
   
 before_install:
@@ -22,6 +26,7 @@ matrix:
     - os: linux
       arch: s390x
       dist: focal
+#      language: GENERIC
       
 script:
   - if [[ "$DB" == build* ]] ; then .travis/build/build.sh; fi
