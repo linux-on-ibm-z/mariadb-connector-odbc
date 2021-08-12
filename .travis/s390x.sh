@@ -8,7 +8,7 @@ sudo service mysql stop
 sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
 sudo apt purge -y mysql-server mysql-client mysql-common 
 sudo apt autoremove -y
-DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev 
+travis_wait 30 DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev 
 
 sudo service mysql start
 sudo ln -s /var/run/mysqld/mysqld.sock /tmp/mysql.sock
