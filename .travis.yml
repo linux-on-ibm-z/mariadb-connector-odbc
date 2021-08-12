@@ -38,6 +38,6 @@ script:
   - sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
   - sudo apt purge -y mysql-server mysql-client mysql-common 
   - sudo apt autoremove -y
-  - travis_wait 30 sudo apt-get install -y mariadb-server unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev
+  - sudo RUNLEVEL=1 apt-get install -y mariadb-server unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev
 
 #  - if [ "$TRAVIS_ARCH" = "s390x" ]; then .travis/s390x.sh; fi
