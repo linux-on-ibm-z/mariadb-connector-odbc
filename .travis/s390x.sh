@@ -8,12 +8,13 @@ sudo service mysql stop
 sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
 sudo apt purge -y mysql-server mysql-client mysql-common 
 sudo apt autoremove -y
-echo exit 101 | sudo tee /usr/sbin/policy-rc.d
-sudo chmod +x /usr/sbin/policy-rc.d
-DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev 
-sudo mysql --version
+#echo exit 101 | sudo tee /usr/sbin/policy-rc.d
+#sudo chmod +x /usr/sbin/policy-rc.d
 echo "/usr/sbin/mysqld { }" | sudo tee /etc/apparmor.d/usr.sbin.mysqld
 sudo apparmor_parser -v -R /etc/apparmor.d/usr.sbin.mysqld
+DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev 
+#sudo mysql --version
+
 #sudo /etc/init.d/mysql start
 #sudo systemctl start mysql
 sudo service mysql start
