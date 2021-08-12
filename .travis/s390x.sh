@@ -12,9 +12,11 @@ echo exit 101 | sudo tee /usr/sbin/policy-rc.d
 sudo chmod +x /usr/sbin/policy-rc.d
 DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev 
 sudo mysql --version
-sudo /etc/init.d/mysql start
+echo "/usr/sbin/mysqld { }" | sudo tee /etc/apparmor.d/usr.sbin.mysqld
+sudo apparmor_parser -v -R /etc/apparmor.d/usr.sbin.mysqld
+#sudo /etc/init.d/mysql start
 #sudo systemctl start mysql
-#sudo service mysql start
+sudo service mysql start
 sudo ln -s /var/run/mysqld/mysqld.sock /tmp/mysql.sock
 sudo mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test;'
 sudo mysql -u root -e "USE mysql; UPDATE user SET plugin='mysql_native_password' WHERE User='root'; FLUSH PRIVILEGES;"
