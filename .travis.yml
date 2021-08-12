@@ -33,4 +33,11 @@ script:
   - if [[ "$DB" == build* ]] ; then docker build -t build:10.6 --label build .travis/build/; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$TRAVIS_ARCH" != "s390x" ] ; then .travis/script.sh; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then .travis/osx.sh; fi
-  - if [ "$TRAVIS_ARCH" = "s390x" ]; then .travis/s390x.sh; fi
+  - DEBIAN_FRONTEND=noninteractive sudo apt-get update
+  - sudo service mysql stop
+  - sudo rm -rf /etc/mysql /var/lib/mysql /var/log/mysql
+  - sudo apt purge -y mysql-server mysql-client mysql-common 
+  - sudo apt autoremove -y
+  - travis_wait 30 DEBIAN_FRONTEND=noninteractive sudo apt-get install -y mariadb-server unixodbc-dev git cmake gcc libssl-dev tar curl libcurl4-openssl-dev libkrb5-dev
+
+#  - if [ "$TRAVIS_ARCH" = "s390x" ]; then .travis/s390x.sh; fi
