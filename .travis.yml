@@ -1,17 +1,10 @@
-sudo: required
+sudo: true
 language: c
 services: docker
 addons:
   hosts:
     - mariadb.example.com
     
-addons:
-  apt:
-    update: true
-    
-addons:
-  mariadb: '10.3'
-  
 before_install:
   - chmod +x .travis/s390x.sh
   - chmod 777 .travis/build/
@@ -26,7 +19,6 @@ matrix:
     - os: linux
       arch: s390x
       dist: focal
-#      language: GENERIC
       
 script:
   - if [[ "$DB" == build* ]] ; then .travis/build/build.sh; fi
