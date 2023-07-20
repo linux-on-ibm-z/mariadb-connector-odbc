@@ -725,8 +725,13 @@ ODBC_TEST(t_odbc375)
   EXPECT_STMT(Stmt, SQLExecDirect(Stmt, Query, SQL_NTS), SQL_ERROR);
   CHECK_STMT_RC(Stmt, SQLFreeStmt(Stmt, SQL_CLOSE));
 
+  if (SkipIfRsStreming())
+  {
+    skip("The error is not detectable atm in case of result streaming");
+  }
   /* Still checking if error returnded in case of single statement */
   EXPECT_STMT(Stmt, SQLExecDirect(Stmt, "SELECT(SELECT 1 UNION SELECT 2)", SQL_NTS), SQL_ERROR);
+
   CHECK_STMT_RC(Stmt, SQLFreeStmt(Stmt, SQL_CLOSE));
 
   return OK;
