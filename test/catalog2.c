@@ -304,7 +304,7 @@ ODBC_TEST(t_bug50195)
   OK_SIMPLE_STMT(Stmt, "DROP TABLE IF EXISTS bug50195");
   OK_SIMPLE_STMT(Stmt, "CREATE TABLE bug50195 (i INT NOT NULL)");
 
-  if (Travis != 0  && TravisOnOsx == 0)
+  if (0)/*Travis != 0  && TravisOnOsx == 0)*/
   {
     diag("Test is run in Travis");
     SQLExecDirect(Stmt, (SQLCHAR *)"DROP USER bug50195@'%'", SQL_NTS);
@@ -378,7 +378,7 @@ ODBC_TEST(t_bug50195)
   CHECK_DBC_RC(hdbc1, SQLDisconnect(hdbc1));
   CHECK_DBC_RC(hdbc1, SQLFreeConnect(hdbc1));
 
-  if (Travis != 0  && TravisOnOsx == 0)
+  if (0)/*Travis != 0  && TravisOnOsx == 0)*/
   {
     OK_SIMPLE_STMT(Stmt, "DROP USER bug50195@'%'");
   }
@@ -842,15 +842,15 @@ ODBC_TEST(t_bug55870)
   OK_SIMPLE_STMT(Stmt, "DROP TABLE IF EXISTS bug55870r");
   OK_SIMPLE_STMT(Stmt, "DROP TABLE IF EXISTS bug55870_2");
   OK_SIMPLE_STMT(Stmt, "DROP TABLE IF EXISTS bug55870");
-  OK_SIMPLE_STMT(Stmt, "create table bug55870(a int not null primary key, "
-    "b varchar(20) not null, c varchar(100) not null, INDEX(b)) ENGINE=InnoDB");
+  OK_SIMPLE_STMT(Stmt, "CREATE TABLe bug55870(a INT NOT NULL PRIMARY KEY, "
+    "b VARCHAR(20) NOT NULL, c VARCHAR(100) NOT NULL, INDEX(b)) ENGINE=InnoDB");
 
   /* There should be no problems with I_S version of SQLTablePrivileges. Thus need connection
      not using I_S. SQlStatistics doesn't have I_S version, but it ma change at certain point.
      Thus let's test it on NO_I_S connection too */
   CHECK_ENV_RC(Env, SQLAllocConnect(Env, &hdbc1));
 
-  sprintf((char *)noI_SconnStr, "DSN=%s;UID=%s;PWD=%s;NO_I_S=1", my_dsn, my_uid, my_pwd);
+  sprintf((char *)noI_SconnStr, "DSN=%s;UID=%s;PWD=%s;PORT=%u;NO_I_S=1", my_dsn, my_uid, my_pwd, my_port);
 
   sprintf(query, "GRANT Insert, Select ON bug55870 TO %s", my_uid);
   SQLExecDirect(Stmt, query, SQL_NTS);
@@ -886,13 +886,13 @@ ODBC_TEST(t_bug55870)
 
   CHECK_STMT_RC(hstmt1, SQLFreeStmt(hstmt1, SQL_CLOSE));
 
-  OK_SIMPLE_STMT(Stmt, "create table bug55870_2 (id int not null primary key, value "
-                "varchar(255) not null) ENGINE=InnoDB");
-  OK_SIMPLE_STMT(Stmt, "create table bug55870r (id int unsigned not null primary key,"
-                "refid int not null, refid2 int not null,"
-                "somevalue varchar(20) not null,  foreign key b55870fk1 (refid) "
-                "references bug55870 (a), foreign key b55870fk2 (refid2) "
-                "references bug55870_2 (id)) ENGINE=InnoDB");
+  OK_SIMPLE_STMT(Stmt, "CREATE TABLE bug55870_2 (id INT NOT NULL PRIMARY KEY, value "
+                "VARCHAR(255) NOT NULL) ENGINE=InnoDB");
+  OK_SIMPLE_STMT(Stmt, "CREATE TABLE bug55870r (id INT UNSIGNED NOT NULL PRIMARY KEY,"
+                "refid INT NOT NULL, refid2 INT NOT NULL,"
+                "somevalue VARCHAR(20) NOT NULL,  FOREIGN KEY b55870fk1 (refid) "
+                "REFERENCES bug55870 (a), FOREIGN KEY b55870fk2 (refid2) "
+                "REFERENCES bug55870_2 (id)) ENGINE=InnoDB");
 
   /* actually... looks like no-i_s version of SQLForeignKeys is broken on latest
      server versions. comment in "show table status..." contains nothing */
@@ -905,16 +905,15 @@ ODBC_TEST(t_bug55870)
   /** surprise-surprise - just removing table is not enough to remove related
       records from tables_priv and columns_priv
   */
-  sprintf(query, "revoke select,insert on bug55870 from %s", my_uid);
+  sprintf(query, "REVOKE SELECT,INSERT ON bug55870 FROM %s", my_uid);
   SQLExecDirect(Stmt, query, SQL_NTS);
 
-  sprintf(query, "revoke select (c),insert (c),update (c) on bug55870 from %s", my_uid);
+  sprintf(query, "REVOKE SELECT (c),INSERT (c),UPDATE (c) ON bug55870 FROM %s", my_uid);
   SQLExecDirect(Stmt, query, SQL_NTS);
 
-  OK_SIMPLE_STMT(Stmt, "drop table if exists bug55870r");
-  OK_SIMPLE_STMT(Stmt, "drop table if exists bug55870_2");
-  OK_SIMPLE_STMT(Stmt, "drop table if exists bug55870");
-  
+  OK_SIMPLE_STMT(Stmt, "DROP TABLE bug55870r");
+  OK_SIMPLE_STMT(Stmt, "DROP TABLE bug55870_2");
+  OK_SIMPLE_STMT(Stmt, "DROP TABLE bug55870");
 
   CHECK_STMT_RC(hstmt1, SQLFreeStmt(hstmt1, SQL_DROP));
   CHECK_DBC_RC(hdbc1, SQLDisconnect(hdbc1));

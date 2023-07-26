@@ -46,7 +46,7 @@ export TEST_PORT=$TEST_DB_PORT
 export TEST_SCHEMA=testo
 export TEST_SOCKET=
 if [ "${TEST_REQUIRE_TLS}" = "1" ] ; then
-  export TEST_USETLS=true
+  export TEST_USETLS=1
   export TEST_ADD_PARAM="FORCETLS=1"
 fi
 
@@ -114,7 +114,7 @@ if ! [ "$TRAVIS_OS_NAME" = "windows" ] ; then
   export ODBCSYSINI=$PWD
 
   cat $ODBCSYSINI/odbcinst.ini
-  cat $ODBCSYSINI/odbc.ini | grep -v TEST_PASSWORD
+  cat $ODBCSYSINI/odbc.ini | grep -v PASSWORD
 fi
 
 ctest --output-on-failure

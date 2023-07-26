@@ -1,6 +1,6 @@
 /*
   Copyright (c) 2001, 2012, Oracle and/or its affiliates. All rights reserved.
-                2013, 2022 MariaDB Corporation AB
+                2013, 2023 MariaDB Corporation AB
 
   The MySQL Connector/ODBC is licensed under the terms of the GPLv2
   <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>, like most
@@ -149,7 +149,7 @@ static unsigned int  my_port=        3306;
 char                 ma_strport[12]= "PORT=3306";
 char                 my_host[256];
 static int           Travis= 0, TravisOnOsx= 0;
-BOOL                 ForwardOnly= FALSE, NoCache= FALSE, DynamicAllowed= FALSE;
+BOOL                 ForwardOnly= FALSE, NoCache= FALSE, DynamicAllowed= FALSE, IsMaxScale= FALSE, IsSkySql= FALSE, IsSkySqlHa= FALSE;
 
 /* To use in tests for conversion of strings to (sql)wchar strings */
 SQLWCHAR  sqlwchar_buff[8192], sqlwchar_empty[]= {0};
@@ -283,6 +283,22 @@ void get_env_defaults()
     add_connstr= env_val;
     storedAddConnstr= add_connstr;
   }
+
+  if (env_val= getenv("srv"))
+  {
+    if (strcmp(env_val, "maxscale") == 0)
+    {
+      IsMaxScale= TRUE;
+    }
+    else if (strcmp(env_val, "skysql") == 0)
+    {
+      IsSkySql= TRUE;
+    }
+    else if (strcmp(env_val, "skysql-ha") == 0)
+    {
+      IsSkySqlHa= TRUE;
+    }
+  }
 }
 
 
@@ -340,7 +356,6 @@ void get_options(int argc, char **argv)
       exit(0);
     }
   }
-
   _snprintf(ma_strport, sizeof(ma_strport), "PORT=%u", my_port);
 }
 
@@ -1493,10 +1508,13 @@ const char * OdbcTypeAsString(SQLSMALLINT TypeId, char *Buffer)
   return Buffer;
 }
 
+
 BOOL WindowsDM(HDBC hdbc)
 {
   return using_dm(hdbc) && UnixOdbc() == FALSE && iOdbc() == FALSE;
 }
+
+#define SKIPIF(_COND, _MSG) do {if (_COND) {skip(_MSG);}} while(0)
 
 int SkipIfRsStreming()
 {
@@ -1507,6 +1525,7 @@ int SkipIfRsStreming()
   }
   return 0;
 }
+
 
 void DoNotSkipTests(MA_ODBC_TESTS* tests)
 {
