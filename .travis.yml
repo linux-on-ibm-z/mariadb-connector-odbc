@@ -91,5 +91,4 @@ jobs:
       dist: focal
 
 script: 
-  - if [ "$TRAVIS_ARCH" = "s390x" ]; then .travis/s390x.sh; fi
-  - ./.travis/script.sh
+  - if [ "$TRAVIS_ARCH" = "s390x" ]; then .travis/s390x.sh; else ./.travis/script.sh; fi
