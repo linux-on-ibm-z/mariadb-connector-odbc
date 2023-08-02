@@ -2,7 +2,9 @@ os: linux
 dist: focal
 sudo: true
 language: c
-services: docker
+services: 
+    - docker
+    - mysql
 addons:
   hosts:
     - mariadb.example.com
