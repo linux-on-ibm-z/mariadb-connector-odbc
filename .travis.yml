@@ -16,7 +16,6 @@ cache:
 
 before_install:
   - chmod +x .travis/s390x.sh
-  - apt install -y unixodbc-dev
   - git clone https://github.com/mariadb-corporation/connector-test-machine.git
   # Load cached docker images
   - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
@@ -29,11 +28,12 @@ install:
           connector-test-machine/launch.bat -t "$srv" -v "$v" -d testo
           ;;
         linux)
+          sudo apt update && sudo apt install -y unixodbc-dev
           source connector-test-machine/launch.sh -t "$srv" -v "$v" -d testo -l "$local" -n "$native"
           ;;
       esac
     fi
-
+    
 env: local=0
 
 
