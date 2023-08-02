@@ -4,6 +4,7 @@ sudo: true
 language: c
 services: 
     - docker
+    - mysql
 addons:
   hosts:
     - mariadb.example.com
@@ -19,7 +20,6 @@ before_install:
   - git clone https://github.com/mariadb-corporation/connector-test-machine.git
   # Load cached docker images
   - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
-  - if [[  $TRAVIS_CPU_ARCH == "s390x" ]]; then service mysql start; fi
 
 install:
   - |-
