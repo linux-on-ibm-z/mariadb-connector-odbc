@@ -89,6 +89,7 @@ jobs:
       os: linux
       arch: s390x
       dist: focal
+      env: srv=mariadb v=10.11
 
 script: 
-  - if [ "$TRAVIS_ARCH" = "s390x" ]; then .travis/s390x.sh; else ./.travis/script.sh; fi
+  - ./.travis/script.sh
