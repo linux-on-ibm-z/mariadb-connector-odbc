@@ -718,7 +718,7 @@ namespace mariadb
       if (totalLenEstimation == 0) {
         totalLenEstimation= firstSql.length()*queries.size() + queries.size() - 1;
       }
-      sql.reserve(((std::min<int64_t>(MAX_PACKET_LENGTH, static_cast<int64_t>(totalLenEstimation)) + 7) / 8) * 8);
+      sql.reserve(static_cast<std::size_t>(((std::min(MAX_PACKET_LENGTH, static_cast<int64_t>(totalLenEstimation)) + 7) / 8) * 8));
       currentIndex= assembleBatchAggregateSemiColonQuery(sql, firstSql, queries, currentIndex);
       realQuery(sql);
       sql.clear(); // clear is not supposed to release memory
